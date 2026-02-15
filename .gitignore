@@ -1,0 +1,18 @@
+.vercel
+node_modules/
+dist/
+.env.local
+.env
+.DS_Store
+*.log
+env.md
+
+# iOS/Android build artifacts
+ios/App/App/public/
+android/app/release-key.keystore
+
+# IDE
+.idea/
+
+# Claude Code
+.claude/

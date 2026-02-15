@@ -1,0 +1,75 @@
+.current-location-button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+}
+
+.current-location-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  white-space: nowrap;
+}
+
+.current-location-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.6);
+}
+
+.current-location-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.location-icon {
+  font-size: 16px;
+  animation: pulse 2s infinite;
+}
+
+.current-location-button:disabled .location-icon {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.accuracy-info {
+  text-align: center;
+  color: #666;
+  font-size: 12px;
+}
+
+.error-message {
+  text-align: center;
+  padding: 8px;
+  background-color: #ffebee;
+  border-radius: 4px;
+  font-size: 12px;
+}
