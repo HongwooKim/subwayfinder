@@ -1,4 +1,4 @@
-const KAKAO_API_KEY = "dc5039a6428787151fa6afc2777aac06";
+const KAKAO_API_KEY = process.env.VITE_KAKAO_API_KEY;
 
 async function fetchAllProjects() {
   const projects = [];

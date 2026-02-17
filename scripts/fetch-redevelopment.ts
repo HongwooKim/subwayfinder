@@ -2,7 +2,7 @@
  * 서울시 정비사업 정보몽땅에서 실제 재개발/재건축 데이터를 가져오는 스크립트
  */
 
-const KAKAO_API_KEY = "dc5039a6428787151fa6afc2777aac06";
+const KAKAO_API_KEY = process.env.VITE_KAKAO_API_KEY;
 
 interface RawProject {
   num: string;

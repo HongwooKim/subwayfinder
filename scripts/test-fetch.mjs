@@ -1,4 +1,4 @@
-const KAKAO_API_KEY = "dc5039a6428787151fa6afc2777aac06";
+const KAKAO_API_KEY = process.env.VITE_KAKAO_API_KEY;
 
 // 정비사업 정보몽땅에서 데이터 가져오기
 async function fetchProjects() {
