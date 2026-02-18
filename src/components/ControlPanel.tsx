@@ -230,6 +230,33 @@ export default function ControlPanel({
               </div>
             )}
           </div>
+
+          <div className="control-divider" />
+
+          <div className="data-sources">
+            <h4>데이터 출처</h4>
+            <ul>
+              <li>
+                <strong>재개발/재건축</strong>
+                <br />
+                <a href="https://cleanup.seoul.go.kr" target="_blank" rel="noopener noreferrer">
+                  서울시 정비사업 정보몽땅
+                </a>
+                <br />
+                <span className="data-date">2026.01.06 기준</span>
+              </li>
+              <li>
+                <strong>고위공직자 부동산</strong>
+                <br />
+                <a href="https://jaesan.newstapa.org" target="_blank" rel="noopener noreferrer">
+                  뉴스타파 2025 재산공개
+                </a>
+                <span className="data-count"> (서울 3,370건)</span>
+                <br />
+                <span className="data-date">2025.03.31 공개 / 2026.02.18 반영</span>
+              </li>
+            </ul>
+          </div>
         </>
       )}
     </div>
