@@ -12,6 +12,7 @@ import {
 } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import MarkerClusterGroup from "react-leaflet-cluster";
 import type { Station } from "../data/stations";
 import { redevelopmentZones, STAGE_COLORS, type RedevelopmentStage } from "../data/redevelopment";
 import { politicianProperties, AGENCY_COLORS, type ManagingAgency } from "../data/politicianProperties";
@@ -230,64 +231,85 @@ export default function Map({
           </Polygon>
         ))}
 
-        {showPoliticianProperties && filteredProperties.map((prop) => (
-          <CircleMarker
-            key={prop.id}
-            center={[prop.lat, prop.lng]}
-            radius={7}
-            fillColor={AGENCY_COLORS[prop.agency]}
-            color="#fff"
-            weight={1.5}
-            fillOpacity={0.85}
+        {showPoliticianProperties && (
+          <MarkerClusterGroup
+            chunkedLoading
+            maxClusterRadius={40}
+            spiderfyOnMaxZoom
+            showCoverageOnHover={false}
+            iconCreateFunction={(cluster: { getChildCount: () => number }) => {
+              const count = cluster.getChildCount();
+              let size = "small";
+              if (count > 50) size = "large";
+              else if (count > 10) size = "medium";
+              return L.divIcon({
+                html: `<div><span>${count}</span></div>`,
+                className: `politician-cluster politician-cluster-${size}`,
+                iconSize: L.point(36, 36),
+              });
+            }}
           >
-            <Popup>
-              <div className="zone-popup">
-                <strong>{prop.name}</strong>
-                {prop.isSample && (
-                  <span style={{
-                    background: "#FF5252",
-                    color: "white",
-                    padding: "1px 5px",
-                    borderRadius: "3px",
-                    fontSize: "0.65rem",
-                    marginLeft: "4px",
-                    fontWeight: "bold",
-                  }}>
-                    샘플 (실명 아님)
-                  </span>
-                )}
-                <div className="zone-info">
-                  <span style={{
-                    background: AGENCY_COLORS[prop.agency],
-                    color: "white",
-                    padding: "2px 6px",
-                    borderRadius: "4px",
-                    fontSize: "0.75rem"
-                  }}>
-                    {prop.agency}
-                  </span>
-                  <span style={{
-                    background: prop.propertyType === "건물" ? "#795548" : "#607D8B",
-                    color: "white",
-                    padding: "2px 6px",
-                    borderRadius: "4px",
-                    fontSize: "0.75rem",
-                    marginLeft: "4px"
-                  }}>
-                    {prop.propertyType}
-                  </span>
-                </div>
-                <div style={{ marginTop: "8px", fontSize: "0.85rem" }}>
-                  <div>직위: {prop.position}</div>
-                  {prop.party && <div>정당: {prop.party}</div>}
-                  <div>주소: {prop.address}</div>
-                  {prop.area > 0 && <div>면적: {prop.area.toLocaleString()}㎡</div>}
-                  {prop.value > 0 && <div>가액: {(prop.value / 100000000).toFixed(1)}억원</div>}
-                </div>
-              </div>
-            </Popup>
-          </CircleMarker>
-        ))}
+            {filteredProperties.map((prop) => (
+              <Marker
+                key={prop.id}
+                position={[prop.lat, prop.lng]}
+                icon={L.divIcon({
+                  className: "politician-marker",
+                  html: `<div style="background:${AGENCY_COLORS[prop.agency]};width:12px;height:12px;border-radius:50%;border:1.5px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,0.3)"></div>`,
+                  iconSize: [12, 12],
+                  iconAnchor: [6, 6],
+                })}
+              >
+                <Popup>
+                  <div className="zone-popup">
+                    <strong>{prop.name}</strong>
+                    {prop.isSample && (
+                      <span style={{
+                        background: "#FF5252",
+                        color: "white",
+                        padding: "1px 5px",
+                        borderRadius: "3px",
+                        fontSize: "0.65rem",
+                        marginLeft: "4px",
+                        fontWeight: "bold",
+                      }}>
+                        샘플 (실명 아님)
+                      </span>
+                    )}
+                    <div className="zone-info">
+                      <span style={{
+                        background: AGENCY_COLORS[prop.agency],
+                        color: "white",
+                        padding: "2px 6px",
+                        borderRadius: "4px",
+                        fontSize: "0.75rem"
+                      }}>
+                        {prop.agency}
+                      </span>
+                      <span style={{
+                        background: prop.propertyType === "건물" ? "#795548" : "#607D8B",
+                        color: "white",
+                        padding: "2px 6px",
+                        borderRadius: "4px",
+                        fontSize: "0.75rem",
+                        marginLeft: "4px"
+                      }}>
+                        {prop.propertyType}
+                      </span>
+                    </div>
+                    <div style={{ marginTop: "8px", fontSize: "0.85rem" }}>
+                      <div>직위: {prop.position}</div>
+                      {prop.party && <div>정당: {prop.party}</div>}
+                      <div>주소: {prop.address}</div>
+                      {prop.area > 0 && <div>면적: {prop.area.toLocaleString()}㎡</div>}
+                      {prop.value > 0 && <div>가액: {(prop.value / 100000000).toFixed(1)}억원</div>}
+                    </div>
+                  </div>
+                </Popup>
+              </Marker>
+            ))}
+          </MarkerClusterGroup>
+        )}
 
         {showAllStations &&
           stations.map((station, index) => (

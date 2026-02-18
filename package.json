@@ -21,12 +21,14 @@
     "@deck.gl/layers": "^9.2.5",
     "@deck.gl/mapbox": "^9.2.5",
     "@deck.gl/react": "^9.2.5",
+    "@types/leaflet.markercluster": "^1.5.6",
     "deck.gl": "^9.2.5",
     "leaflet": "^1.9.4",
     "maplibre-gl": "^5.15.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-leaflet": "^5.0.0",
+    "react-leaflet-cluster": "^4.0.0",
     "react-map-gl": "^8.1.0"
   },
   "devDependencies": {
