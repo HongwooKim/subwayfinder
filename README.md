@@ -1,20 +1,19 @@
 # SubwayFinder (지하철역 거리 계산기)
 
-지도에서 클릭한 위치 주변의 가장 가까운 지하철역을 찾고, 도보 경로와 거리를 보여주는 웹/모바일 앱입니다.
-서울의 경우 재개발·재건축 정보도 함께 제공합니다.
+Find the nearest subway stations from any location on the map, with walking routes and distances. Includes redevelopment project data for Seoul.
 
-> **Live Demo**: [https://geo-realestate.vercel.app](https://geo-realestate.vercel.app)
+> **Live Demo**: [https://subwayfinder.vercel.app](https://subwayfinder.vercel.app)
 
 ## Features
 
-- **6개 도시 지하철 탐색** — 서울, 도쿄, 뉴욕, 런던, 파리, 베이징
-- **가까운 역 찾기** — 지도 클릭 시 가장 가까운 5개 역을 거리순으로 표시
-- **도보 경로** — OSRM 기반 실제 도로를 따르는 도보 경로 및 소요시간 표시
-- **장소 검색** — 서울은 Kakao Maps API, 그 외 도시는 Nominatim 사용
-- **현재 위치** — GPS로 현재 위치 탐색
-- **2D/3D 지도 전환** — Leaflet(2D) / Deck.gl(3D) 뷰 전환
-- **재개발 정보 (서울)** — 재개발·재건축 구역을 단계별 색상으로 시각화
-- **모바일 앱** — Capacitor를 통한 iOS/Android 네이티브 앱 지원
+- **6 cities supported** — Seoul, Tokyo, New York, London, Paris, Beijing
+- **Nearest stations** — Click anywhere on the map to find the 5 closest stations sorted by distance
+- **Walking routes** — Real road-based walking routes and estimated time via OSRM
+- **Address search** — Kakao Maps API for Seoul, Nominatim for other cities
+- **Current location** — GPS-based location detection
+- **2D/3D map toggle** — Switch between Leaflet (2D) and Deck.gl (3D) views
+- **Redevelopment info (Seoul)** — Visualize redevelopment/reconstruction zones by stage
+- **Mobile apps** — iOS/Android native apps via Capacitor
 
 ## Tech Stack
 
@@ -45,7 +44,7 @@ npm install
 
 ### Environment Variables
 
-`.env.local` 파일을 생성하고 API 키를 설정합니다.
+Create a `.env.local` file with your API keys:
 
 ```bash
 cp .env.example .env.local
@@ -56,9 +55,9 @@ VITE_KAKAO_API_KEY=your_kakao_rest_api_key_here
 VITE_SEOUL_API_KEY=your_seoul_opendata_api_key_here
 ```
 
-API 키 발급처:
+Where to get API keys:
 - **Kakao REST API Key**: [Kakao Developers](https://developers.kakao.com/)
-- **서울시 공공데이터 API Key**: [서울 열린데이터광장](https://data.seoul.go.kr/)
+- **Seoul Open Data API Key**: [Seoul Open Data Plaza](https://data.seoul.go.kr/)
 
 ### Run
 
@@ -87,22 +86,22 @@ npm run cap:android
 ```
 src/
 ├── components/
-│   ├── Map.tsx                  # 2D Leaflet 지도
-│   ├── Map3D.tsx                # 3D Deck.gl 지도
-│   ├── SearchBar.tsx            # 장소 검색
-│   ├── StationList.tsx          # 주변 역 목록
-│   ├── ControlPanel.tsx         # 지도 컨트롤 패널
-│   └── CurrentLocationButton.tsx # 현재 위치 버튼
+│   ├── Map.tsx                  # 2D Leaflet map
+│   ├── Map3D.tsx                # 3D Deck.gl map
+│   ├── SearchBar.tsx            # Address search
+│   ├── StationList.tsx          # Nearby station list
+│   ├── ControlPanel.tsx         # Map control panel
+│   └── CurrentLocationButton.tsx # Current location button
 ├── hooks/
-│   ├── useCurrentLocation.ts    # GPS 위치 훅
-│   └── useWalkingRoutes.ts      # OSRM 도보 경로 훅
+│   ├── useCurrentLocation.ts    # GPS location hook
+│   └── useWalkingRoutes.ts      # OSRM walking route hook
 ├── data/
-│   ├── cities.ts                # 도시 설정
-│   ├── redevelopment.ts         # 서울 재개발 구역 데이터
-│   └── stations/                # 도시별 지하철역 데이터
+│   ├── cities.ts                # City configuration
+│   ├── redevelopment.ts         # Seoul redevelopment zone data
+│   └── stations/                # Subway station data by city
 ├── utils/
-│   ├── distance.ts              # Haversine 거리 계산
-│   └── routing.ts               # OSRM 라우팅
+│   ├── distance.ts              # Haversine distance calculation
+│   └── routing.ts               # OSRM routing
 ├── App.tsx
 └── App.css
 ```
@@ -117,6 +116,10 @@ src/
 | London | Full network | Nominatim | - |
 | Paris | Full network | Nominatim | - |
 | Beijing | Full network | Nominatim | - |
+
+## Contributing
+
+Contributions are welcome! Feel free to open issues or submit pull requests.
 
 ## License
 
