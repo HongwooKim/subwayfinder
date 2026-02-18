@@ -6,6 +6,7 @@ import SearchBar from "./components/SearchBar";
 import ControlPanel from "./components/ControlPanel";
 import CurrentLocationButton from "./components/CurrentLocationButton";
 import { STAGE_ORDER, type RedevelopmentStage } from "./data/redevelopment";
+import { AGENCY_ORDER, type ManagingAgency } from "./data/politicianProperties";
 import { CITIES, CITY_LIST, type CityId } from "./data/cities";
 import { cityStations, cityLineColors } from "./data/stations/index";
 import type { StationWithDistance } from "./utils/distance";
@@ -29,6 +30,8 @@ function App() {
   });
   const [showControlPanel, setShowControlPanel] = useState(true);
   const [selectedStationIndex, setSelectedStationIndex] = useState<number | null>(null);
+  const [showPoliticianProperties, setShowPoliticianProperties] = useState(false);
+  const [selectedAgencies, setSelectedAgencies] = useState<ManagingAgency[]>([...AGENCY_ORDER]);
 
   const cityConfig = CITIES[selectedCity];
   const stations = useMemo(() => cityStations[selectedCity], [selectedCity]);
@@ -125,6 +128,8 @@ function App() {
               lineColors={lineColors}
               walkingRoutes={stationsWithRoutes}
               selectedStationIndex={selectedStationIndex}
+              showPoliticianProperties={isSeoul && showPoliticianProperties}
+              selectedAgencies={selectedAgencies}
             />
           ) : (
             <Map
@@ -138,6 +143,8 @@ function App() {
               cityZoom={cityConfig.zoom}
               walkingRoutes={stationsWithRoutes}
               selectedStationIndex={selectedStationIndex}
+              showPoliticianProperties={isSeoul && showPoliticianProperties}
+              selectedAgencies={selectedAgencies}
             />
           )}
           <CurrentLocationButton
@@ -164,6 +171,10 @@ function App() {
               isSeoul={isSeoul}
               cityCenter={cityConfig.center}
               cityZoom={cityConfig.zoom}
+              showPoliticianProperties={showPoliticianProperties}
+              onTogglePoliticianProperties={setShowPoliticianProperties}
+              selectedAgencies={selectedAgencies}
+              onAgencyChange={setSelectedAgencies}
             />
           )}
         </div>

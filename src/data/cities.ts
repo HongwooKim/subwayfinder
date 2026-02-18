@@ -8,6 +8,7 @@ export interface CityConfig {
   zoom: number;
   searchProvider: "kakao" | "nominatim";
   hasRedevelopment: boolean;
+  hasPoliticianProperties: boolean;
   country: string;
 }
 
@@ -20,6 +21,7 @@ export const CITIES: Record<CityId, CityConfig> = {
     zoom: 12,
     searchProvider: "kakao",
     hasRedevelopment: true,
+    hasPoliticianProperties: true,
     country: "South Korea",
   },
   tokyo: {
@@ -30,6 +32,7 @@ export const CITIES: Record<CityId, CityConfig> = {
     zoom: 12,
     searchProvider: "nominatim",
     hasRedevelopment: false,
+    hasPoliticianProperties: false,
     country: "Japan",
   },
   newyork: {
@@ -39,6 +42,7 @@ export const CITIES: Record<CityId, CityConfig> = {
     zoom: 12,
     searchProvider: "nominatim",
     hasRedevelopment: false,
+    hasPoliticianProperties: false,
     country: "United States",
   },
   london: {
@@ -48,6 +52,7 @@ export const CITIES: Record<CityId, CityConfig> = {
     zoom: 12,
     searchProvider: "nominatim",
     hasRedevelopment: false,
+    hasPoliticianProperties: false,
     country: "United Kingdom",
   },
   paris: {
@@ -57,6 +62,7 @@ export const CITIES: Record<CityId, CityConfig> = {
     zoom: 12,
     searchProvider: "nominatim",
     hasRedevelopment: false,
+    hasPoliticianProperties: false,
     country: "France",
   },
   beijing: {
@@ -67,6 +73,7 @@ export const CITIES: Record<CityId, CityConfig> = {
     zoom: 12,
     searchProvider: "nominatim",
     hasRedevelopment: false,
+    hasPoliticianProperties: false,
     country: "China",
   },
 };

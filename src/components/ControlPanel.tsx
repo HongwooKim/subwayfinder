@@ -1,4 +1,5 @@
 import { STAGE_COLORS, STAGE_ORDER, type RedevelopmentStage } from "../data/redevelopment";
+import { AGENCY_COLORS, AGENCY_ORDER, type ManagingAgency } from "../data/politicianProperties";
 
 interface ControlPanelProps {
   viewState: {
@@ -24,6 +25,10 @@ interface ControlPanelProps {
   isSeoul: boolean;
   cityCenter: { lat: number; lng: number };
   cityZoom: number;
+  showPoliticianProperties: boolean;
+  onTogglePoliticianProperties: (show: boolean) => void;
+  selectedAgencies: ManagingAgency[];
+  onAgencyChange: (agencies: ManagingAgency[]) => void;
 }
 
 export default function ControlPanel({
@@ -38,6 +43,10 @@ export default function ControlPanel({
   isSeoul,
   cityCenter,
   cityZoom,
+  showPoliticianProperties,
+  onTogglePoliticianProperties,
+  selectedAgencies,
+  onAgencyChange,
 }: ControlPanelProps) {
   const handleChange = (key: keyof typeof viewState, value: number) => {
     onViewStateChange({
@@ -70,6 +79,22 @@ export default function ControlPanel({
 
   const clearAllStages = () => {
     onStageChange([]);
+  };
+
+  const toggleAgency = (agency: ManagingAgency) => {
+    if (selectedAgencies.includes(agency)) {
+      onAgencyChange(selectedAgencies.filter((a) => a !== agency));
+    } else {
+      onAgencyChange([...selectedAgencies, agency]);
+    }
+  };
+
+  const selectAllAgencies = () => {
+    onAgencyChange([...AGENCY_ORDER]);
+  };
+
+  const clearAllAgencies = () => {
+    onAgencyChange([]);
   };
 
   return (
@@ -161,6 +186,45 @@ export default function ControlPanel({
                       style={{ backgroundColor: STAGE_COLORS[stage] }}
                     />
                     <span className="stage-name">{stage}</span>
+                  </label>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div className="control-divider" />
+
+          <div className="control-section">
+            <div className="control-section-header">
+              <h4>고위공직자 부동산</h4>
+              <label className="toggle-switch">
+                <input
+                  type="checkbox"
+                  checked={showPoliticianProperties}
+                  onChange={(e) => onTogglePoliticianProperties(e.target.checked)}
+                />
+                <span className="toggle-slider"></span>
+              </label>
+            </div>
+
+            {showPoliticianProperties && (
+              <div className="stage-filters">
+                <div className="stage-filter-actions">
+                  <button onClick={selectAllAgencies}>전체 선택</button>
+                  <button onClick={clearAllAgencies}>전체 해제</button>
+                </div>
+                {AGENCY_ORDER.map((agency) => (
+                  <label key={agency} className="stage-checkbox">
+                    <input
+                      type="checkbox"
+                      checked={selectedAgencies.includes(agency)}
+                      onChange={() => toggleAgency(agency)}
+                    />
+                    <span
+                      className="stage-color"
+                      style={{ backgroundColor: AGENCY_COLORS[agency] }}
+                    />
+                    <span className="stage-name">{agency}</span>
                   </label>
                 ))}
               </div>

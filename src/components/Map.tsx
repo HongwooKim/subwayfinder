@@ -14,6 +14,7 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import type { Station } from "../data/stations";
 import { redevelopmentZones, STAGE_COLORS, type RedevelopmentStage } from "../data/redevelopment";
+import { politicianProperties, AGENCY_COLORS, type ManagingAgency } from "../data/politicianProperties";
 import type { StationWithDistance } from "../utils/distance";
 import { findNearestStations } from "../utils/distance";
 import type { StationWithRoute } from "../utils/routing";
@@ -37,6 +38,8 @@ interface MapProps {
   cityZoom: number;
   walkingRoutes: StationWithRoute[];
   selectedStationIndex: number | null;
+  showPoliticianProperties: boolean;
+  selectedAgencies: ManagingAgency[];
 }
 
 interface LocationMarkerProps {
@@ -132,6 +135,8 @@ export default function Map({
   cityZoom,
   walkingRoutes,
   selectedStationIndex,
+  showPoliticianProperties,
+  selectedAgencies,
 }: MapProps) {
   const [showAllStations, setShowAllStations] = useState(false);
   const [mapKey, setMapKey] = useState(0);
@@ -143,6 +148,10 @@ export default function Map({
 
   const filteredZones = redevelopmentZones.filter(
     zone => selectedStages.includes(zone.stage)
+  );
+
+  const filteredProperties = politicianProperties.filter(
+    prop => selectedAgencies.includes(prop.agency)
   );
 
   return (
@@ -219,6 +228,51 @@ export default function Map({
               </div>
             </Popup>
           </Polygon>
+        ))}
+
+        {showPoliticianProperties && filteredProperties.map((prop) => (
+          <CircleMarker
+            key={prop.id}
+            center={[prop.lat, prop.lng]}
+            radius={7}
+            fillColor={AGENCY_COLORS[prop.agency]}
+            color="#fff"
+            weight={1.5}
+            fillOpacity={0.85}
+          >
+            <Popup>
+              <div className="zone-popup">
+                <strong>{prop.name}</strong>
+                <div className="zone-info">
+                  <span style={{
+                    background: AGENCY_COLORS[prop.agency],
+                    color: "white",
+                    padding: "2px 6px",
+                    borderRadius: "4px",
+                    fontSize: "0.75rem"
+                  }}>
+                    {prop.agency}
+                  </span>
+                  <span style={{
+                    background: prop.propertyType === "건물" ? "#795548" : "#607D8B",
+                    color: "white",
+                    padding: "2px 6px",
+                    borderRadius: "4px",
+                    fontSize: "0.75rem",
+                    marginLeft: "4px"
+                  }}>
+                    {prop.propertyType}
+                  </span>
+                </div>
+                <div style={{ marginTop: "8px", fontSize: "0.85rem" }}>
+                  <div>직위: {prop.position}</div>
+                  <div>주소: {prop.address}</div>
+                  {prop.area > 0 && <div>면적: {prop.area.toLocaleString()}㎡</div>}
+                  {prop.value > 0 && <div>가액: {(prop.value / 100000000).toFixed(1)}억원</div>}
+                </div>
+              </div>
+            </Popup>
+          </CircleMarker>
         ))}
 
         {showAllStations &&

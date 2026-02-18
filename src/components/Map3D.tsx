@@ -5,6 +5,7 @@ import { LineLayer, PathLayer, ScatterplotLayer, ColumnLayer, PolygonLayer } fro
 import "maplibre-gl/dist/maplibre-gl.css";
 import type { Station } from "../data/stations";
 import { redevelopmentZones, STAGE_COLORS, type RedevelopmentStage, type RedevelopmentZone } from "../data/redevelopment";
+import { politicianProperties, AGENCY_COLORS, type ManagingAgency, type PoliticianProperty } from "../data/politicianProperties";
 import type { StationWithDistance } from "../utils/distance";
 import { findNearestStations } from "../utils/distance";
 import type { PickingInfo } from "@deck.gl/core";
@@ -33,6 +34,8 @@ interface Map3DProps {
   lineColors: Record<string, string>;
   walkingRoutes: StationWithRoute[];
   selectedStationIndex: number | null;
+  showPoliticianProperties: boolean;
+  selectedAgencies: ManagingAgency[];
 }
 
 function hexToRgb(hex: string): [number, number, number] {
@@ -53,6 +56,8 @@ export default function Map3D({
   lineColors,
   walkingRoutes,
   selectedStationIndex,
+  showPoliticianProperties,
+  selectedAgencies,
 }: Map3DProps) {
   const [selectedPosition, setSelectedPosition] = useState<{
     lat: number;
@@ -104,6 +109,10 @@ export default function Map3D({
     zone => selectedStages.includes(zone.stage)
   );
 
+  const filteredProperties = politicianProperties.filter(
+    prop => selectedAgencies.includes(prop.agency)
+  );
+
   // Filter by selected station, then separate by walking route availability
   const visibleRoutes = selectedStationIndex !== null
     ? walkingRoutes.filter((_, i) => i === selectedStationIndex)
@@ -131,6 +140,21 @@ export default function Map3D({
         return (stageIndex + 1) * 50;
       },
       elevationScale: 1,
+      pickable: true,
+    }),
+
+    showPoliticianProperties && new ScatterplotLayer<PoliticianProperty>({
+      id: "politician-properties",
+      data: filteredProperties,
+      getPosition: (d) => [d.lng, d.lat],
+      getRadius: 80,
+      getFillColor: (d) => {
+        const [r, g, b] = hexToRgb(AGENCY_COLORS[d.agency]);
+        return [r, g, b, 220];
+      },
+      getLineColor: [255, 255, 255, 200],
+      lineWidthMinPixels: 1,
+      stroked: true,
       pickable: true,
     }),
 
@@ -227,6 +251,26 @@ export default function Map3D({
                 <span style="color: ${STAGE_COLORS[zone.stage]}">${zone.stage}</span><br/>
                 ${zone.district}${zone.estimatedUnits ? `<br/>예상 ${zone.estimatedUnits.toLocaleString()}세대` : ""}
                 ${zone.estimatedCompletion ? `<br/>준공 ${zone.estimatedCompletion}년` : ""}
+              </div>`,
+              style: {
+                backgroundColor: "#fff",
+                padding: "8px",
+                borderRadius: "4px",
+                boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
+              },
+            };
+          }
+
+          if ("agency" in object) {
+            const prop = object as PoliticianProperty;
+            return {
+              html: `<div>
+                <strong>${prop.name}</strong> (${prop.position})<br/>
+                <span style="color: ${AGENCY_COLORS[prop.agency]}">${prop.agency}</span> ·
+                <span style="color: ${prop.propertyType === "건물" ? "#795548" : "#607D8B"}">${prop.propertyType}</span><br/>
+                ${prop.address}
+                ${prop.area > 0 ? `<br/>면적: ${prop.area.toLocaleString()}㎡` : ""}
+                ${prop.value > 0 ? `<br/>가액: ${(prop.value / 100000000).toFixed(1)}억원` : ""}
               </div>`,
               style: {
                 backgroundColor: "#fff",
