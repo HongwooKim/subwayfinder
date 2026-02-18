@@ -1,8 +1,8 @@
 .current-location-button-container {
   position: absolute;
-  top: 10px;
+  top: 50px;
   right: 10px;
-  z-index: 10;
+  z-index: 1001;
 }
 
 .current-location-button {
