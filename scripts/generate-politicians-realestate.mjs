@@ -12,6 +12,16 @@ const CSV_PATH = join(__dirname, "newstapa-jaesan-2025/CSV/newstapa-jaesan-2025-
 const OUTPUT_PATH = join(__dirname, "../src/data/politicianProperties.ts");
 
 const KAKAO_API_KEY = process.env.VITE_KAKAO_API_KEY;
+const PARTY_MAP_PATH = join(__dirname, "../scripts/party_map.json");
+
+// 국회의원 정당 매핑 로드 (Wikipedia 22대 국회의원 목록 기반)
+let partyMap = {};
+try {
+  partyMap = JSON.parse(readFileSync(PARTY_MAP_PATH, "utf-8"));
+  console.log(`Loaded party map: ${Object.keys(partyMap).length} members`);
+} catch {
+  console.log("No party_map.json found - party info will be empty for 국회 members");
+}
 
 // 기관 매핑
 function normalizeAgency(raw) {
@@ -232,10 +242,13 @@ async function main() {
     const valueStr = row["현재가액"] || "0";
     const value = parseInt(valueStr.replace(/,/g, ""), 10) * 1000 || 0; // 천원 → 원
 
+    const name = row["이름"] || "";
+    const party = (agency === "국회" && partyMap[name]) ? partyMap[name] : "";
+
     results.push({
-      name: row["이름"] || "",
+      name,
       position: row["직위"] || "",
-      party: "",
+      party,
       agency,
       propertyType: category === "건물" ? "건물" : "토지",
       address: shortenAddress(description),
