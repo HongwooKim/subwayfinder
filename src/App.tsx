@@ -102,10 +102,6 @@ function App() {
       </div>
       <main className="main">
         <div className="map-container">
-          <CurrentLocationButton
-            onLocationFound={handleLocationSelect}
-            isSeoul={isSeoul}
-          />
           {is3D ? (
             <Map3D
               onNearestStationsChange={handleNearestStationsChange}
@@ -133,6 +129,10 @@ function App() {
               selectedStationIndex={selectedStationIndex}
             />
           )}
+          <CurrentLocationButton
+            onLocationFound={handleLocationSelect}
+            isSeoul={isSeoul}
+          />
           <button
             className="control-panel-toggle"
             onClick={() => setShowControlPanel(!showControlPanel)}
