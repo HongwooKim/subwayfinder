@@ -267,7 +267,8 @@ export default function Map3D({
               html: `<div>
                 <strong>${prop.name}</strong> (${prop.position})<br/>
                 <span style="color: ${AGENCY_COLORS[prop.agency]}">${prop.agency}</span> ·
-                <span style="color: ${prop.propertyType === "건물" ? "#795548" : "#607D8B"}">${prop.propertyType}</span><br/>
+                <span style="color: ${prop.propertyType === "건물" ? "#795548" : "#607D8B"}">${prop.propertyType}</span>
+                ${prop.party ? ` · ${prop.party}` : ""}<br/>
                 ${prop.address}
                 ${prop.area > 0 ? `<br/>면적: ${prop.area.toLocaleString()}㎡` : ""}
                 ${prop.value > 0 ? `<br/>가액: ${(prop.value / 100000000).toFixed(1)}억원` : ""}

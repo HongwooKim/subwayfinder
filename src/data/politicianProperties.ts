@@ -8,6 +8,7 @@ export interface PoliticianProperty {
   id: string;
   name: string;
   position: string;
+  party: string;
   agency: ManagingAgency;
   propertyType: "건물" | "토지";
   address: string;
@@ -40,6 +41,7 @@ export const politicianProperties: PoliticianProperty[] = [
     id: "pp-1",
     name: "홍길동",
     position: "국회의원",
+    party: "더불어민주당",
     agency: "국회",
     propertyType: "건물",
     address: "서울 강남구 삼성동",
@@ -53,6 +55,7 @@ export const politicianProperties: PoliticianProperty[] = [
     id: "pp-2",
     name: "김철수",
     position: "국회의원",
+    party: "국민의힘",
     agency: "국회",
     propertyType: "토지",
     address: "서울 서초구 서초동",
@@ -66,6 +69,7 @@ export const politicianProperties: PoliticianProperty[] = [
     id: "pp-3",
     name: "이영희",
     position: "장관",
+    party: "",
     agency: "정부",
     propertyType: "건물",
     address: "서울 용산구 한남동",
@@ -79,6 +83,7 @@ export const politicianProperties: PoliticianProperty[] = [
     id: "pp-4",
     name: "박민수",
     position: "대법관",
+    party: "",
     agency: "대법원",
     propertyType: "건물",
     address: "서울 서초구 반포동",
@@ -92,6 +97,7 @@ export const politicianProperties: PoliticianProperty[] = [
     id: "pp-5",
     name: "정수진",
     position: "선관위원",
+    party: "",
     agency: "선관위",
     propertyType: "토지",
     address: "서울 종로구 삼청동",
@@ -105,6 +111,7 @@ export const politicianProperties: PoliticianProperty[] = [
     id: "pp-6",
     name: "최판사",
     position: "헌법재판관",
+    party: "",
     agency: "헌재",
     propertyType: "건물",
     address: "서울 종로구 재동",

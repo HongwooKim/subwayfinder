@@ -266,6 +266,7 @@ export default function Map({
                 </div>
                 <div style={{ marginTop: "8px", fontSize: "0.85rem" }}>
                   <div>직위: {prop.position}</div>
+                  {prop.party && <div>정당: {prop.party}</div>}
                   <div>주소: {prop.address}</div>
                   {prop.area > 0 && <div>면적: {prop.area.toLocaleString()}㎡</div>}
                   {prop.value > 0 && <div>가액: {(prop.value / 100000000).toFixed(1)}억원</div>}

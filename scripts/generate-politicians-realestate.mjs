@@ -209,6 +209,7 @@ async function main() {
     results.push({
       name: row["성명"] || row["공직자성명"] || "",
       position: row["직위"] || row["직책"] || "",
+      party: row["정당"] || row["소속정당"] || "",
       agency,
       propertyType,
       address: row.extractedAddress,
@@ -235,6 +236,7 @@ export interface PoliticianProperty {
   id: string;
   name: string;
   position: string;
+  party: string;
   agency: ManagingAgency;
   propertyType: "건물" | "토지";
   address: string;
@@ -267,12 +269,14 @@ export const politicianProperties: PoliticianProperty[] = [
   results.forEach((p, i) => {
     const escapedName = p.name.replace(/"/g, '\\"');
     const escapedPosition = p.position.replace(/"/g, '\\"');
+    const escapedParty = p.party.replace(/"/g, '\\"');
     const escapedAddress = p.address.replace(/"/g, '\\"');
     const escapedFull = p.addressFull.replace(/"/g, '\\"').replace(/\n/g, " ");
     output += `  {
     id: "pp-${i + 1}",
     name: "${escapedName}",
     position: "${escapedPosition}",
+    party: "${escapedParty}",
     agency: "${p.agency}",
     propertyType: "${p.propertyType}",
     address: "${escapedAddress}",
