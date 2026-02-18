@@ -596,10 +596,12 @@ body {
   }
 
   .search-input-wrapper {
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: nowrap;
   }
 
-  .search-button {
-    width: 100%;
+  .search-input {
+    min-width: 0;
+    flex: 1;
   }
 }

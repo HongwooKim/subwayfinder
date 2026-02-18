@@ -13,6 +13,7 @@ interface SearchBarProps {
   searchProvider: "kakao" | "nominatim";
   isSeoul: boolean;
   cityCenter: { lat: number; lng: number };
+  children?: React.ReactNode;
 }
 
 const KAKAO_API_KEY = import.meta.env.VITE_KAKAO_API_KEY;
@@ -103,7 +104,7 @@ async function searchNominatim(query: string, center: { lat: number; lng: number
   );
 }
 
-export default function SearchBar({ onLocationSelect, searchProvider, isSeoul, cityCenter }: SearchBarProps) {
+export default function SearchBar({ onLocationSelect, searchProvider, isSeoul, cityCenter, children }: SearchBarProps) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -155,6 +156,7 @@ export default function SearchBar({ onLocationSelect, searchProvider, isSeoul, c
           placeholder={placeholder}
           className="search-input"
         />
+        {children}
         <button onClick={searchAddress} className="search-button" disabled={isLoading}>
           {isLoading ? (isSeoul ? "검색중..." : "Searching...") : (isSeoul ? "검색" : "Search")}
         </button>

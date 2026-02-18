@@ -1,26 +1,24 @@
 .current-location-button-container {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 8px;
+  display: contents;
 }
 
 .current-location-button {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 10px 16px;
+  gap: 4px;
+  padding: 8px 12px;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   border: none;
   border-radius: 8px;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .current-location-button:hover:not(:disabled) {
@@ -34,7 +32,7 @@
 }
 
 .location-icon {
-  font-size: 16px;
+  font-size: 14px;
   animation: pulse 2s infinite;
 }
 

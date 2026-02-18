@@ -72,7 +72,7 @@ function App() {
     <div className="app">
       <header className="header">
         <div className="header-top">
-          <h1>Subway Station Finder</h1>
+          <h1>Subway Finder</h1>
           <select
             className="city-selector"
             value={selectedCity}
@@ -98,11 +98,12 @@ function App() {
           searchProvider={cityConfig.searchProvider}
           isSeoul={isSeoul}
           cityCenter={cityConfig.center}
-        />
-        <CurrentLocationButton
-          onLocationFound={handleLocationSelect}
-          isSeoul={isSeoul}
-        />
+        >
+          <CurrentLocationButton
+            onLocationFound={handleLocationSelect}
+            isSeoul={isSeoul}
+          />
+        </SearchBar>
       </div>
       <main className="main">
         <div className="map-container">
