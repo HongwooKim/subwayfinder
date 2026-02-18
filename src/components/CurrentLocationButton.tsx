@@ -33,12 +33,7 @@ export default function CurrentLocationButton({
         disabled={loading}
         title={isSeoul ? "현재 위치 찾기" : "Find current location"}
       >
-        <span className="location-icon">📍</span>
-        {loading ? (
-          <span>{isSeoul ? "위치 확인 중..." : "Finding..."}</span>
-        ) : (
-          <span>{isSeoul ? "현재 위치" : "My Location"}</span>
-        )}
+        <span className="location-icon">{loading ? "⏳" : "📍"}</span>
       </button>
       {accuracy !== null && (
         <div className="accuracy-info">

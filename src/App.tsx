@@ -98,15 +98,14 @@ function App() {
           searchProvider={cityConfig.searchProvider}
           isSeoul={isSeoul}
           cityCenter={cityConfig.center}
-        >
+        />
+      </div>
+      <main className="main">
+        <div className="map-container">
           <CurrentLocationButton
             onLocationFound={handleLocationSelect}
             isSeoul={isSeoul}
           />
-        </SearchBar>
-      </div>
-      <main className="main">
-        <div className="map-container">
           {is3D ? (
             <Map3D
               onNearestStationsChange={handleNearestStationsChange}
