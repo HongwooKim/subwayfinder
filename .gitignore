@@ -16,3 +16,7 @@ android/app/release-key.keystore
 
 # Claude Code
 .claude/
+
+# Raw data files
+scripts/newstapa-jaesan-2025/
+scripts/*.zip
