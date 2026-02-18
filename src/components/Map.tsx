@@ -243,6 +243,19 @@ export default function Map({
             <Popup>
               <div className="zone-popup">
                 <strong>{prop.name}</strong>
+                {prop.isSample && (
+                  <span style={{
+                    background: "#FF5252",
+                    color: "white",
+                    padding: "1px 5px",
+                    borderRadius: "3px",
+                    fontSize: "0.65rem",
+                    marginLeft: "4px",
+                    fontWeight: "bold",
+                  }}>
+                    샘플 (실명 아님)
+                  </span>
+                )}
                 <div className="zone-info">
                   <span style={{
                     background: AGENCY_COLORS[prop.agency],

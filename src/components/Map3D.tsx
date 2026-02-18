@@ -265,7 +265,7 @@ export default function Map3D({
             const prop = object as PoliticianProperty;
             return {
               html: `<div>
-                <strong>${prop.name}</strong> (${prop.position})<br/>
+                <strong>${prop.name}</strong>${prop.isSample ? ' <span style="background:#FF5252;color:#fff;padding:1px 5px;border-radius:3px;font-size:0.7em;font-weight:bold">샘플 (실명 아님)</span>' : ""} (${prop.position})<br/>
                 <span style="color: ${AGENCY_COLORS[prop.agency]}">${prop.agency}</span> ·
                 <span style="color: ${prop.propertyType === "건물" ? "#795548" : "#607D8B"}">${prop.propertyType}</span>
                 ${prop.party ? ` · ${prop.party}` : ""}<br/>

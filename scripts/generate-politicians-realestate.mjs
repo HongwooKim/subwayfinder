@@ -245,6 +245,7 @@ export interface PoliticianProperty {
   value: number;
   lat: number;
   lng: number;
+  isSample?: boolean;
 }
 
 export const AGENCY_COLORS: Record<ManagingAgency, string> = {
